@@ -20,10 +20,10 @@ app.use(morgan('combined'))
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
-    //mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
+    mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
-/*if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
+if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
       mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'],
       mongoPort = process.env[mongoServiceName + '_SERVICE_PORT'],
@@ -37,17 +37,18 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
       mongoURL += mongoUser + ':' + mongoPassword + '@';
     }
     // Provide UI label that excludes user id and pw
-    //mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
-    //mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
-	mongoURL +='127.0.0.1' + ':' +  '27017' + '/' + 'test';
-	mongoURLLabel +='127.0.0.1' + ':' +  '27017' + '/' + 'test';
+    mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
+    mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
+	//mongoURL +='127.0.0.1' + ':' +  '27017' + '/' + 'test';
+	//mongoURLLabel +='127.0.0.1' + ':' +  '27017' + '/' + 'test';
 
   }
-}*/
-mongoose.connect('mongodb://127.0.0.1/test');
-mongoURLLabel = mongoURL = 'mongodb://';
-mongoURL +='127.0.0.1' + ':' +  '27017' + '/' + 'test';
-	mongoURLLabel +='127.0.0.1' + ':' +  '27017' + '/' + 'test';
+}
+//mongoose.connect('mongodb://127.0.0.1/test');
+mongoose.connect('mongodb://'+mongoURL);
+//mongoURLLabel = mongoURL = 'mongodb://';
+//mongoURL +='127.0.0.1' + ':' +  '27017' + '/' + 'test';
+	//mongoURLLabel +='127.0.0.1' + ':' +  '27017' + '/' + 'test';
 var db = null,
     dbDetails = new Object();
 
